@@ -3,7 +3,7 @@
 <section id="rate-website">
     <?php $lang= $_COOKIE["lang"]; ?>
     <form action="form_submit.php" method="post" id="rate-web">
-        <?php if($_COOKIE["shopify_customer_id"] && $_COOKIE["customer_id"]){
+        <?php if(isset($_COOKIE["shopify_customer_id"]) && isset($_COOKIE["customer_id"])){
         $customer_id=$_COOKIE["customer_id"];
         $shopify_customer_id=$_COOKIE["shopify_customer_id"];
     }

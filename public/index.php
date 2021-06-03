@@ -1,7 +1,10 @@
 <?php
 require_once 'paytabs.php';
 $pt = new paytabs("mjehad@dunkindonuts.sa", "NCqgpDmKmTcXAvKO5J6kvV7fDwhfQjnDVNUlqg6NaiKLOuzTeFeJBlZeRhuIBRlwEfS5wYSHgCs471YmHc6iy6xpn28YTtvyJnDf");
+if(isset($_POST['payment_reference']))
+{
 $result = $pt->verify_payment($_POST['payment_reference']);
+}
 ?>
 
 

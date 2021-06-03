@@ -1,7 +1,10 @@
  <?php 
 
     session_start();
+    if(isset($_SESSION["url"]))
+    {
     $url=$_SESSION["url"];
+  }
     if(isset($_SESSION["customer_id"]))
     {
         
@@ -130,9 +133,9 @@
                      var formData = new FormData($(this)[0]);
                       $.ajax({
                         type: 'post',
-                        url: post_url,
+                        url: 'form_submit.php',
                         data: formData,
-                        dataType: 'json',
+                        
                         cache: false,
                         contentType: false,
                         enctype: 'multipart/form-data',
@@ -146,10 +149,12 @@
                         }
                         })
                         .done  (function(response, textStatus, jqXHR)        
-                        { 
-                            
+                        { console.log("success");
+                       
+                            response=JSON.parse(response);
                             if(response.status == "success")
                             {
+                              
                               /* Swal.fire({
                                       
                                       title: "Dunkin KSA",
@@ -186,6 +191,7 @@
                             
                             else
                             {
+                              console.log("failed");
                                 Swal.fire({
                                   
                                   title: dunkin,
@@ -200,18 +206,37 @@
                                    rgba(38, 38, 38, 0.8);
                                   `
                                 })
-                                console.log("failed");
+                                
                                 
                             }
                         })
-                        .fail  (function(jqXHR, textStatus, errorThrown) 
+                        .fail  (function(jqXHR, exception) 
                         {  
-                            Swal.fire(
+                         /*   Swal.fire(
                                       errorThrown,
                                       textStatus,
                                       'error'
-                                    )
+                                    ); */
+                            if (jqXHR.status === 0) {
+                alert('Not connect.\n Verify Network.');
+            } else if (jqXHR.status == 404) {
+                alert('Requested page not found. [404]');
+            } else if (jqXHR.status == 500) {
+                alert('Internal Server Error [500].');
+            } else if (exception === 'parsererror') {
+                alert('Requested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                alert('Time out error.');
+            } else if (exception === 'abort') {
+                alert('Ajax request aborted.');
+            } else {
+                alert('Uncaught Error.\n' + jqXHR.responseText);
+            }
                             
+                            console.log("error");
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                            console.log(errorThrown);
                         })
                         
                                 

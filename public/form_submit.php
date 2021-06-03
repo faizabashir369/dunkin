@@ -10,9 +10,12 @@
         $lang="en";
     }
     session_start();
+    if(isset($_COOKIE['phone']))
+    {
     $phone=$_COOKIE['phone'];
     $phone=str_replace("+966", "",$phone);
     $email=$_COOKIE['email'];
+  }
     if(isset($_COOKIE['customer_id']))
     {
         $customer_id=$_COOKIE['customer_id'];
@@ -607,6 +610,8 @@ if ($_FILES["image"]["type"][$i] != "image/png" && $_FILES["image"]["type"][$i] 
     ));
 
 $response = curl_exec($curl);
+if(isset($response['code']))
+{
 if($response['code']=='401')
         {
            // header("Location:login.php");
@@ -617,6 +622,7 @@ if($response['code']=='401')
 </script>
 
             <?php
+          }
         }
 curl_close($curl);
 echo $response;
